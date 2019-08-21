@@ -20,7 +20,7 @@
 		<script type="text/javascript" src="js/site.js"></script>
 		<script type="text/javascript" src="js/tabletop1.3.4.js"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142866432-2"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
@@ -33,7 +33,6 @@
 		.word-cloud {
 		margin: auto;
 		text-align:center;
-		width: 100%;
 		padding: 1px;
 
 		}
@@ -62,10 +61,11 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">View and Upvote Submissions</h1>
-								<div class="word-cloud">
-								<svg id="dataviz_area"></svg>
-								</div>
 								<p>Take this chance to look at some of our submissions and vote for them!</p>
+						<div id="word-cloud" style="width:100%; height:400px;text-align: center;">
+						<svg id="vis" style="display:inline-block;"></svg>
+						</div>
+					</div>
 					<div class="col-12">
 						<style>
 						.forms-studio{
@@ -106,43 +106,103 @@
 	    })
 		</script>
 		<script>
-		var frequency_list = [{"text": "carbon", "size":"120"},{"text": "climate", "size":"90"},{"text": "change", "size":"85"},{"text": "india", "size":"70"},{"text": "water", "size":"45"},{"text": "straitstimes", "size":"45"},{"text": "asia", "size":"40"},{"text": "pricing", "size":"40"},{"text": "tax", "size":"40"},{"text": "tco", "size":"35"},{"text": "ocasio", "size":"35"},{"text": "cortezalexandriarep", "size":"30"},{"text": "kjellstromtordand", "size":"30"},{"text": "bowenkathryn", "size":"25"},{"text": "louisehelen", "size":"25"},{"text": "index", "size":"20"},{"text": "edition", "size":"20"},{"text": "cnn", "size":"15"},{"text": "chennai", "size":"15"},{"text": "crisis", "size":"15"},{"text": "train", "size":"15"},{"text": "malaysia", "size":"15"},{"text": "expecting", "size":"15"},{"text": "shortage", "size":"15"},{"text": "six", "size":"15"},{"text": "states", "size":"15"},{"text": "including", "size":"15"},{"text": "johorminister", "size":"15"},{"text": "https", "size":"15"},{"text": "minister", "size":"15"},{"text": "johorincluding", "size":"15"},{"text": "singapore", "size":"15"},{"text": "pushing", "size":"10"},{"text": "world", "size":"10"},{"text": "hunger", "size":"10"},{"text": "timesstraitsthe", "size":"10"},{"text": "jose", "size":"10"},{"text": "lefthavewewillwhat", "size":"10"},{"text": "thenevenand", "size":"10"},{"text": "farmsfishsingapore", "size":"10"},{"text": "examplefor", "size":"10"},{"text": "hitarecountriesfood", "size":"10"},{"text": "timein", "size":"10"},{"text": "timelongafor", "size":"10"},{"text": "conclusion", "size":"10"},{"text": "projects", "size":"10"},{"text": "beta", "size":"10"},{"text": "worldbank", "size":"10"},{"text": "org", "size":"10"},{"text": "results", "size":"10"},{"text": "bankworld", "size":"10"},{"text": "text", "size":"10"},{"text": "nea", "size":"10"},{"text": "gov", "size":"10"},{"text": "services", "size":"5"},{"text": "energy", "size":"5"},{"text": "efficiency", "size":"5"},{"text": "ibid", "size":"5"},{"text": "jobs", "size":"5"},{"text": "withgreening", "size":"5"},{"text": "lives", "size":"5"},{"text": "usatestimatedas", "size":"5"},{"text": "wastetacklesalsothis", "size":"5"},{"text": "remanufactureandrent", "size":"5"},{"text": "repair", "size":"5"},{"text": "recycling", "size":"5"}];
-		var color = d3.scale.linear()
-				.domain([2,6,10,15,20,30,100])
-				.range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
-		
-		var w=800, h=200;
-		
-		d3.layout.cloud().size([w, h])
-				.words(frequency_list)
-				.padding(5)
-				.rotate(0)
-				.fontSize(function(d) { return d.size; })
-				.on("end", draw)
-				.start();
+		var tags = [{"key": "climate", "value":"120"},{"key": "change", "value":"90"},{"key": "food", "value":"85"},{"key": "water", "value":"70"},{"key": "even", "value":"45"},{"key": "also", "value":"45"},{"key": "time", "value":"40"},{"key": "per", "value":"40"},{"key": "national", "value":"40"},{"key": "wellbeing", "value":"35"},{"key": "wealth", "value":"35"},{"key": "people", "value":"30"},{"key": "action", "value":"30"},{"key": "countries", "value":"25"},{"key": "blooms", "value":"25"},{"key": "fish", "value":"20"},{"key": "crisis", "value":"20"},{"key": "short", "value":"15"},{"key": "progress", "value":"15"},{"key": "environmental", "value":"15"},{"key": "ton", "value":"15"},{"key": "increase", "value":"15"},{"key": "tax", "value":"15"},{"key": "left", "value":"15"},{"key": "scarcity", "value":"15"},{"key": "truggle", "value":"15"},{"key": "security", "value":"15"},{"key": "threatens", "value":"15"},{"key": "overall", "value":"15"},{"key": "make", "value":"15"},{"key": "era", "value":"15"},{"key": "children", "value":"15"},{"key": "ethics", "value":"10"},{"key": "question", "value":"10"},{"key": "beginning", "value":"10"},{"key": "worldwide", "value":"10"},{"key": "frequent", "value":"10"},{"key": "increasingly", "value":"10"},{"key": "exposes", "value":"10"},{"key": "health", "value":"10"},{"key": "mental", "value":"10"},{"key": "worsen", "value":"10"},{"key": "purported", "value":"10"},{"key": "repeatedly", "value":"10"},{"key": "facets", "value":"10"},{"key": "consider", "value":"10"},{"key": "economics", "value":"10"},{"key": "prioritise", "value":"10"},{"key": "surrounding", "value":"10"},{"key": "hitting", "value":"10"},{"key": "impacts", "value":"10"},{"key": "see", "value":"10"},{"key": "already", "value":"10"},{"key": "recent", "value":"10"},{"key": "warming", "value":"5"},{"key": "global", "value":"5"},{"key": "problem", "value":"5"},{"key": "recurrent", "value":"5"},{"key": "likely", "value":"5"},{"key": "said", "value":"5"},{"key": "farms", "value":"5"},{"key": "tonnes", "value":"5"},{"key": "hundreds", "value":"5"},{"key": "killed", "value":"5"},{"key": "plankton", "value":"5"},{"key": "recurring", "value":"5"},{"key": "example", "value":"5"},{"key": "affected", "value":"5"},{"key": "produces", "value":"5"},{"key": "whatever", "value":"5"},{"key": "hit", "value":"5"},{"key": "producing", "value":"5"},{"key": "badly", "value":"5"},{"key": "depending", "value":"5"},{"key": "vulnerable", "value":"5"},{"key": "especially", "value":"5"},{"key": "makes", "value":"5"},{"key": "cent", "value":"5"},{"key": "imports", "value":"5"},{"key": "fact", "value":"5"},{"key": "month", "value":"5"},{"key": "last", "value":"5"},{"key": "published", "value":"5"},{"key": "highlights", "value":"5"},{"key": "article", "value":"5"},{"key": "worst", "value":"5"},{"key": "protect", "value":"5"},{"key": "scale", "value":"5"},{"key": "climatic", "value":"5"},{"key": "run", "value":"5"},{"key": "compromises", "value":"5"},{"key": "necessary", "value":"5"},{"key": "costs", "value":"5"},{"key": "opportunity", "value":"5"},{"key": "indicator", "value":"5"},{"key": "economic", "value":"5"},{"key": "foremost", "value":"5"},{"key": "long", "value":"5"},{"key": "tenable", "value":"5"},{"key": "longer", "value":"5"},{"key": "measurement", "value":"5"},{"key": "believe", "value":"5"},{"key": "light", "value":"5"},{"key": "away", "value":"5"},{"key": "metrics", "value":"5"},{"key": "performance", "value":"5"},{"key": "societal", "value":"5"},{"key": "sciences", "value":"5"},{"key": "humanities", "value":"5"},{"key": "literacy", "value":"5"},{"key": "relevant", "value":"5"},{"key": "ensure", "value":"5"},{"key": "responsibility", "value":"5"},{"key": "lives", "value":"5"},{"key": "generations", "value":"5"},{"key": "future", "value":"5"},{"key": "part", "value":"5"},{"key": "major", "value":"5"},{"key": "curriculum", "value":"5"},{"key": "science", "value":"5"},{"key": "studies", "value":"5"},{"key": "compulsory", "value":"5"},{"key": "estimated", "value":"5"},{"key": "transformational", "value":"5"},{"key": "drive", "value":"5"},{"key": "needed", "value":"5"},{"key": "level", "value":"5"},{"key": "far", "value":"5"},{"key": "intentions", "value":"5"},{"key": "till", "value":"5"},{"key": "inadequate", "value":"5"},{"key": "wholly", "value":"5"},{"key": "existing", "value":"5"},{"key": "carbon", "value":"5"},{"key": "waste", "value":"5"},{"key": "tackles", "value":"5"},{"key": "remanufacture", "value":"5"},{"key": "rent", "value":"5"},{"key": "repair", "value":"5"},{"key": "recycling", "value":"5"},{"key": "circular", "value":"5"}];		
+				var fill = d3.scale.category20c();
+				var w = +d3.select('#word-cloud').style('width').slice(0, -2);
+				var h = +d3.select('#word-cloud').style('height').slice(0, -2);
 
-		function draw(words) {
-			d3.select("svg")
-					.attr("width", w)
-					.attr("height", h)
-					.attr("class", "wordcloud")
-					.append("g")
-					// without the transform, words words would get cutoff to the left and top, they would
-					// appear outside of the SVG area
-					.attr("transform", "translate(" + w/2 + "," + h/2 + ")")
-					.selectAll("text")
-					.data(words)
-					.enter().append("text")
-					.style("font-size", function(d) { return d.size + "px"; })
-					.style("fill", function(d, i) { return color(i); })
-					.attr("text-anchor", "middle")
-					.attr("transform", function(d,i) {
-						return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+
+				//var w = window.innerWidth;
+				//var h = window.innerHeight;
+
+				var max,
+						fontSize;
+
+				var layout = d3.layout.cloud()
+						.timeInterval(Infinity)
+						.size([w, h])
+						.fontSize(function(d) {
+							return fontSize(+d.value);
+						})
+						.text(function(d) {
+							return d.key;
+						})
+						.on("end", draw);
+				var svg = d3.select("#vis")
+						.attr("width", w)
+						.attr("height", h);
+
+				var vis = svg.append("g").attr("transform", "translate(" + [w >> 1, h >> 1] + ")");
+
+				update();
+
+				if(window.attachEvent) {
+					window.attachEvent('onresize', update);
+				}
+				else if(window.addEventListener) {
+					window.addEventListener('resize', update);
+				}
+
+				function draw(data, bounds) {
+					
+				var w = +d3.select('#word-cloud').style('width').slice(0, -2);
+				var h = +d3.select('#word-cloud').style('height').slice(0, -2);
+					//var w = window.innerWidth,
+					//	h = window.innerHeight;
+
+					svg.attr("width", w).attr("height", h); //changes the overall height
+
+					scale = bounds ? Math.min(
+							w / Math.abs(bounds[1].x),
+							w / Math.abs(bounds[0].x),
+							h / Math.abs(bounds[1].y),
+							h / Math.abs(bounds[0].y)) : 1;
+
+					var text = vis.selectAll("text")
+							.data(data, function(d) {
+								return d.text.toLowerCase();
+							});
+					text.transition()
+							.duration(1000)
+							.attr("transform", function(d) {
+								return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+							})
+							.style("font-size", function(d) {
+								return d.size + "px";
+							});
+					text.enter().append("text")
+							.attr("text-anchor", "middle")
+							.attr("transform", function(d) {
+								return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+							})
+							.style("font-size", function(d) {
+								return d.size + "px";
+							})
+							.style("opacity", 1e-6)
+							.transition()
+							.duration(1000)
+							.style("opacity", 1);
+					text.style("font-family", function(d) {
+						return d.font;
 					})
-					.text(function(d) { return d.text; });
-		}
-	
-	
+							.style("fill", function(d) {
+								return fill(d.text.toLowerCase());
+							})
+							.text(function(d) {
+								return d.text;
+							});
+
+					vis.transition().attr("transform", "translate(" + [w >> 1, h >> 1] + ")scale(" + scale + ")");
+				}
+
+				function update() {
+					layout.font('impact').spiral('archimedean');
+					fontSize = d3.scale['sqrt']().range([10, 100]);
+					if (tags.length){
+						fontSize.domain([+tags[tags.length - 1].value || 1, +tags[0].value]);
+					}
+					layout.stop().words(tags).start();
+				}
 	</script>
 
 	</body>
