@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Speak For Climate - Email Now</title>
+		<meta name="description" content="
+		Speak for Climate is an initiative that was borne out of a desire to see greater collaboration and transparency in the public consultation process within the environmental community in Singapore." />
+		<meta content="
+		Speak for Climate is an initiative that was borne out of a desire to see greater collaboration and transparency in the public consultation process within the environmental community in Singapore." property="og:description" />
+		<meta content="Speak for Climate" property="og:title" /><meta content="Hear and be Heard" property="twitter:title" />
+		<meta content="images/logo.png" property="og:image" />
+		<meta content="images/logo.png" property="twitter:image" />
+		<meta content="images/logo.png" property="og:url" />
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142866432-2"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-142866432-2');
+		</script>
+
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Speak for Climate</a>
+				<nav>
+					<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="contribute.html">Contribute</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="viewUpvote.html">View and Upvote Submissions</a>
+							<li><a href="idea.html">Ideas</a>
+							<li><a href="additionalResources.html">Resources</a>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Prepare your feedback</h1>
+								<div class="row">
+							<p>As you read through ideas, feel free to craft your own response to NCCS in the form below. When you click the button, it will launch your e-mail app and you can send your feedback directly from there!</p>
+							</div>
+							<form> 
+								<label id="name">Your name please</label>
+								<input type="text" id="name" name="name" placeholder="Your name will form as part of the e-mail subject">
+								<label id="ideas">Ideas</label>
+								<textarea id="ideas" rows="10" placeholder="Compile the points that resonate with you here. This will be the body of your e-mail to NCCS"></textarea>
+							</form>
+							<button type="submit" class="btn btn-primary" onclick="sendMail()">E-mail NCCS now!</button>
+							</p>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Speak for Climate. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			
+			<script>
+			function sendMail() {
+				var name = $('input').val();
+				var message = $('textarea').val();
+				window.location.href = 'mailto:nccs_contact@pmo.gov.sg?subject=Public Consultation on Developing Singapore’s Long-Term Low Emissions Strategy - From ' + name + '&body=' + message;
+			};
+			</script>
+
+	</body>
+</html>
