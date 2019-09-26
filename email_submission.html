@@ -21,6 +21,7 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142866432-2"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
 		<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
@@ -39,6 +40,7 @@
 					<ul>
 							<li><a href="index.html">Home</a></li>
 							<li><a href="contribute.html">Contribute</a></li>
+							<li><a href="email_submission.html">E-mail now</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="viewUpvote.html">View and Upvote Submissions</a>
 							<li><a href="idea.html">Ideas</a>
@@ -56,13 +58,37 @@
 							<h1 class="major">Prepare your feedback</h1>
 								<div class="row">
 							<p>As you read through ideas, feel free to craft your own response to NCCS in the form below. When you click the button, it will launch your e-mail app and you can send your feedback directly from there!</p>
+							<p>Or, if you prefer, we have prepared an e-mail draft which you are free to use!
+							<br>
+							<a href="https://docs.google.com/document/d/e/2PACX-1vTiLiDmrcmn-UykeZwxBTpb3_MSeqsH2coOJDWY-xbp_cn6ZpHLT8JA_xN8RYTsbK1qqSXDLZ8Gds2s/pub?embedded=true" target="_blank" class="button scrolly">Fully-crafted message</a>
+							</p>
 							</div>
 							<form> 
 								<label id="name">Your name please</label>
 								<input type="text" id="name" name="name" placeholder="Your name will form as part of the e-mail subject">
 								<label id="ideas">Ideas</label>
 								<textarea id="ideas" rows="10" placeholder="Compile the points that resonate with you here. This will be the body of your e-mail to NCCS"></textarea>
-							</form>
+								<br>
+								<p>Or, feel free to include some pre-crafted ideas in your message!</p>
+								<input class="message" type="checkbox" id="A" value="Improving energy efficiency across sectors by incentivising Singaporean households to purchase and use more energy-efficient appliances.">
+								<label for="A">Improving energy efficiency across sectors by incentivising Singaporean households to purchase and use more energy-efficient appliances.</label>
+								<br>
+								<input class="message" type="checkbox" id="B" value="Encouraging responsible climate action through carbon pricing using a simple taxation scheme based on verified emission values.">
+								<label for="B">Encouraging responsible climate action through carbon pricing using a simple taxation scheme based on verified emission values.</label>
+								<br>
+								<input class="message" type="checkbox" id="C" value="Reducing emissions from power generation through encouraging solar power by reducing non-cost factors such as lack of consumer informtion and difficulty in switching suppliers while providing monetary incentives to motivate firms to deploy solar energy technology.">
+								<label for="C">Reducing emissions from power generation through encouraging solar power by reducing non-cost factors such as lack of consumer informtion and difficulty in switching suppliers while providing monetary incentives to motivate firms to deploy solar energy technology.</label>
+								<br>
+								<input class="message" type="checkbox" id="D" value="Deploying emerging low-carbon technologies such as electric vehicles.">
+								<label for="D">Deploying emerging low-carbon technologies such as electric vehicles.</label>
+								<br>
+								<input class="message" type="checkbox" id="E" value="Encouraging collective climate action such as encouraging public transport by improving pedestrian lanes, encouraging conscious consumption such as eating less meat and dairy, emphasise the reduction and reuse of goods and amending intellectual property regulations to allow private repairing of devices, divestment from fossil fuels, and reaffirming Singapore's commitment to climate action.">
+								<label for="E">Encouraging collective climate action such as encouraging public transport by improving pedestrian lanes, encouraging conscious consumption such as eating less meat and dairy, emphasise the reduction and reuse of goods and amending intellectual property regulations to allow private repairing of devices, divestment from fossil fuels, and reaffirming Singapore's commitment to climate action.</label>
+								<br>
+								<input class="message" type="checkbox" id="F" value="Tapping on green growth opportunities by positioning Singapore to be a global leader in grwwn growth. This can start by re-considering the recently announced expansion of Jurong Island, transitioning jobs towards an environmentally sustainable economy, investing in clean energy, and developing agri-business and agri-tech.">
+								<label for="F">Tapping on green growth opportunities by positioning Singapore to be a global leader in grwwn growth. This can start by re-considering the recently announced expansion of Jurong Island, transitioning jobs towards an environmentally sustainable economy, investing in clean energy, and developing agri-business and agri-tech.</label>
+								</form>
+
 							<button type="submit" class="btn btn-primary" onclick="sendMail()">E-mail NCCS now!</button>
 							</p>
 						</div>
@@ -87,12 +113,24 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			
 			<script>
+
 			function sendMail() {
+				var numbering = ['8.','7.','6.','5.','4.','3.','2.','1.'];
+				var messages = [];
+				$('.message:checkbox:checked').each(function(i,e){
+				messages.push( $(e).attr('value') )
+				})
 				var name = $('input').val();
-				var message = $('textarea').val();
-				window.location.href = 'mailto:nccs_contact@pmo.gov.sg?subject=Public Consultation on Developing Singapore’s Long-Term Low Emissions Strategy - From ' + name + '&body=' + message;
+				var your_idea = $('textarea').val();
+				var idea = your_idea + "%0D%0A%0D%0A";
+				var send_message = "";
+				for (i=0;i,messages.length;i++){
+					send_message = send_message + numbering.pop() + messages.pop() + "%0D%0A%0D%0A";
+					console.log(send_message);
+				}
+				var footer = "%0D%0A%0D%0ASincerely\,%0D%0A" + name;
+				window.location.href = 'mailto:nccs_contact@pmo.gov.sg?subject=Public Consultation on Developing Singapore’s Long-Term Low Emissions Strategy - From ' + name + '&body=' + idea + send_message + footer;
 			};
 			</script>
 
